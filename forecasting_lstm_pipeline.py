@@ -58,7 +58,6 @@ def define_callbacks(model_name, save_path = "model_experiments"):
 def create_forecast_df(y, n_lookback, n_forecast, model, df):
     X_pred = y[- n_lookback:]
     y_pred = X_pred.reshape(1, n_lookback, 1)
-
     y_pred = model.predict(X_pred).reshape(-1, 1)
     y_pred = scaler().inverse_transform(y_pred)
 
@@ -83,13 +82,15 @@ def plot_predictions(results):
     ax.legend()
     return fig, ax
 
-pipeline = Pipeline([
-    ('preprocess df', preprocess_df()),
-    ('scaling', scaling()),
-    ('series split', series_split()),
-    ('build lstm model', build_lstm_model()),
-    ('build lambda model', build_lambda_model()),
-    ('define callbacks', define_callbacks()),
-    ('create forecasted df', create_forecast_df()),
-    ('plot predictions', plot_predictions())
-])
+def get_pipeline(preprocess_df, scaling, series_split, build_lstm_model, 
+build_lambda_model, define_callbacks, create_forecast_df, plot_predictions):
+    pipeline = Pipeline([
+        ('preprocess df', preprocess_df()),
+        ('scaling', scaling()),
+        ('series split', series_split()),
+        ('build lstm model', build_lstm_model()),
+        ('build lambda model', build_lambda_model()),
+        ('define callbacks', define_callbacks()),
+        ('create forecasted df', create_forecast_df()),
+        ('plot predictions', plot_predictions())])
+    return pipeline
