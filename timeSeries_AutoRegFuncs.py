@@ -14,7 +14,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 import statsmodels.api as sm
 
 def read_csv(csv_path, index_col, parse_dates):
-    df = pd.read_csV(csv_path, index_col = index_col, 
+    df = pd.read_csv(csv_path, index_col = index_col, 
     parse_dates = parse_dates) #Set index column to the dates, and parse dates
     return df
 

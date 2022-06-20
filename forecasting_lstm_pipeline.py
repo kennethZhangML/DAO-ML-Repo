@@ -61,6 +61,11 @@ def create_forecast_df(y, n_lookback, n_forecast, model, df):
     y_pred = model.predict(X_pred).reshape(-1, 1)
     y_pred = scaler().inverse_transform(y_pred)
 
+    X_pred = y[- n_lookback:]
+    y_pred = X_pred.reshape(1, n_lookback, 1)
+    y_pred = model.predict(X_pred).reshape(-1, 1)
+    y_pred = scaler().inverse_transform(y_pred)
+
     df_past = df[['Close']].reset_index()
     df_past.rename(columns = {'index': 'Date', 'Close': 'Actual'}, inplace = True)
     df_past['Date'] = pd.to_datetime(df_past['Date'])
